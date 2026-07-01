@@ -2,7 +2,6 @@
 
 **Um sistema web simples para controle de estoque, vendas e indicadores gerenciais de uma banca de revistas.**
 
-Projeto desenvolvido como trabalho da disciplina de **Banco de Dados** (ou Laboratório de Programação Web).
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white)
