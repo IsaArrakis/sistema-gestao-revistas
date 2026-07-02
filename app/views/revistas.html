@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Revistas - MVC</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        h2 { margin: 0; color: #2c3e50; }
+        .user-info { font-size: 14px; color: #7f8c8d; display: flex; align-items: center; }
+        .btn { padding: 8px 12px; border-radius: 4px; text-decoration: none; color: white; font-size: 14px; cursor: pointer; display: inline-block; }
+        .btn-danger { background-color: #e74c3c; }
+        .btn-danger:hover { background-color: #c0392b; }
+        .btn-logout { background-color: #95a5a6; margin-left: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #2c3e50; color: white; }
+        .aviso { color: #e67e22; font-size: 12px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Catálogo de Revistas</h2>
+            <div class="user-info">
+                <span style="margin-right: 15px;">Logado como: <strong>{{ session['nome'] }}</strong> ({{ session['cargo'] }})</span>
+                
+                {% if session['cargo'] == 'Administrador' %}
+                    <a href="/vendas/nova" class="btn" style="background-color: #9b59b6;">🛒 Vender</a>
+                    <a href="/bi" class="btn" style="background-color: #f1c40f; color: black; margin-left: 5px;">📊 Painel BI</a>
+                    <a href="/revistas/nova" class="btn" style="background-color: #27ae60; margin-left: 5px;">+ Nova Revista</a>
+                {% endif %}
+                
+                <a href="/logout" class="btn btn-logout">Sair</a>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome da Revista</th>
+                    <th>Estoque</th>
+                    <th>Preço</th>
+                    {% if session['cargo'] == 'Administrador' %}
+                    <th>Ações</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for revista in revistas %}
+                <tr>
+                    <td>{{ revista.id_revista }}</td>
+                    <td>{{ revista.nome_revista }}</td>
+                    <td>{{ revista.quantidade_em_estoque }} un.</td>
+                    <td>R$ {{ revista.preco }}</td>
+                    {% if session['cargo'] == 'Administrador' %}
+                    <td>
+                        <a href="/revistas/editar/{{ revista.id_revista }}" class="btn" style="background-color: #3498db; margin-right: 5px;">Editar</a>
+                        <a href="/revistas/excluir/{{ revista.id_revista }}" class="btn btn-danger" onclick="return confirm('Tem a certeza que deseja excluir esta revista?');">Excluir</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center;">Nenhuma revista encontrada no banco de dados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

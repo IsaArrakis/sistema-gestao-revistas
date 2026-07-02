@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><title>Registrar Venda</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; padding: 40px; display: flex; justify-content: center; }
+        .box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); width: 400px; }
+        input, select, button { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; box-sizing: border-box; }
+        .btn { background: #9b59b6; color: white; border: none; cursor: pointer; }
+        .btn-voltar { display: block; text-align: center; background: #95a5a6; color: white; padding: 10px; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Registrar Venda</h2>
+        <form method="POST">
+            <label>Selecione a Revista:</label>
+            <select name="id_revista" required>
+                {% for r in revistas %} <option value="{{ r.id_revista }}">{{ r.nome_revista }} (R$ {{ r.preco }})</option> {% endfor %}
+            </select>
+            <label>Quantidade:</label> <input type="number" name="quantidade" value="1" min="1" required>
+            <label>Pagamento:</label>
+            <select name="pagamento"> <option>Dinheiro</option><option>PIX</option><option>Cartão</option> </select>
+            <button type="submit" class="btn">Confirmar Venda</button>
+            <a href="/revistas" class="btn-voltar">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
